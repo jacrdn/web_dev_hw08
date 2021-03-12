@@ -19,6 +19,8 @@ defmodule Events.Posts do
   """
   def list_posts do
     Repo.all(Post)
+    |> Repo.preload(:user)
+    |> Repo.preload(:invitees)
   end
 
   @doc """
@@ -35,7 +37,24 @@ defmodule Events.Posts do
       ** (Ecto.NoResultsError)
 
   """
+
   def get_post!(id), do: Repo.get!(Post, id)
+
+  def load_comments(%Post{} = post) do
+    Repo.preload(post, [comments: :user])
+  end
+
+  def load_invitees(%Post{} = post) do
+    Repo.preload(post, [invitees: :post])
+  end
+
+  def load_invitees(id) do
+    Repo.preload(id, [invitees: :post])
+  end
+
+  def load_responses(%Post{} = post) do
+    Repo.preload(post, [responses: :user])
+  end
 
   @doc """
   Creates a post.

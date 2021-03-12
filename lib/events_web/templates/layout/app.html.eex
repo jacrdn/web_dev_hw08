@@ -4,28 +4,34 @@
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>PhotoBlog · Phoenix Framework</title>
+    <title>Events · Phoenix Framework</title>
     <link rel="stylesheet" href="<%= Routes.static_path(@conn, "/css/app.css") %>"/>
     <script defer type="text/javascript" src="<%= Routes.static_path(@conn, "/js/app.js") %>"></script>
   </head>
-
   <body>
     <div role="main" class="container">
       <div class="row">
         <div class="col my-2">
-          <p><%= link "Home", to: "/" %></p>
+          <p><%= link "Home", to: "/" %>
+            <%= if function_exported?(Routes, :live_dashboard_path, 2) do %>
+            <% end %>
+            <%= if @conn.assigns[:current_user] do %>
+            <%= link "Profile", to: Routes.user_path(@conn, :show, @current_user) %>
+            <% end %>
+          </p>
         </div>
         <%= if @conn.assigns[:current_user] do %>
           User: <%= @current_user.name %> |
           <%= link("Logout",
             to: Routes.session_path(@conn, :delete),
             method: :delete) %>
+            <br>
         <% else %>
           <div class="col">
             <%= form_for @conn,
-                  Routes.session_path(@conn, :create),
-                  [class: "form-inline"],
-                  fn f -> %>
+            Routes.session_path(@conn, :create),
+            [class: "form-inline"],
+            fn f -> %>
               <%= text_input f, :name, class: "form-control" %>
               <%= submit "Login", class: "btn btn-secondary" %>
             <% end %>
@@ -49,6 +55,4 @@
       <%= @inner_content %>
     </div>
   </body>
-  
 </html>
-

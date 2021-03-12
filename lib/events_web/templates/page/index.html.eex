@@ -10,17 +10,48 @@
   <%= link("New Post",
         to: Routes.post_path(@conn, :new)) %>
 </p>
-
+<%# @current_user.email %>
 <div class="row">
   <%= for post <- @posts do %>
-    <div class="col-sm-4 card">
-      <div class="card-body">
-        <p class="card-text"><%= post.title %></p>
-        <%= link(
-              "view",
-              to: Routes.post_path(@conn, :show, post)
-            ) %>
-      </div>
-    </div>
+    <%= if have_current_user?(@conn) do %>
+      <%= if @current_user.email == post.user.email do  %>
+        <div class="col-sm-4 card">
+              <% src = Routes.user_path(@conn, :photo, post.user) %>
+                <img class="card-img-top"
+                    src="<%= src %>"
+                    alt="">
+                <div class="card-body">
+                  <p class="card-text"><%= post.title %></p>
+                  <p class="card-text"> Posted by: <%= post.user.name %></p>
+                  <%= link(
+                        "view",
+                        to: Routes.post_path(@conn, :show, post)
+                      ) %>
+                </div>
+              </div>
+            <% end %>
+        <% end %>
+
+
+  <%= for inv <- post.invitees do %>
+    <%= if have_current_user?(@conn) do %>
+      <%= if @current_user.email == inv.email do  %>
+          <div class="col-sm-4 card">
+              <% src = Routes.user_path(@conn, :photo, post.user) %>
+                <img class="card-img-top"
+                    src="<%= src %>"
+                    alt="">
+                <div class="card-body">
+                  <p class="card-text"><%= post.title %></p>
+                  <p class="card-text"> Posted by: <%= post.user.name %></p>
+                  <%= link(
+                        "view",
+                        to: Routes.post_path(@conn, :show, post)
+                      ) %>
+                </div>
+              </div>
+      <% end %>
+    <% end %>
+    <% end %>
   <% end %>
 </div>

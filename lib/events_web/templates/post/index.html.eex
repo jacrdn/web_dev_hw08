@@ -1,10 +1,9 @@
-<h1>Listing Events</h1>
+<h1>Listing Posts</h1>
 
-<table>
+<table class="table table-striped">
   <thead>
     <tr>
       <th>Body</th>
-      <th>Title</th>
 
       <th></th>
     </tr>

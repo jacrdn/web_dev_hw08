@@ -5,6 +5,10 @@
     </div>
   <% end %>
 
+
+
+
+
   <div class="form-group">
     <%= label f, :title %>
     <%= textarea f, :title, class: "form-control" %>

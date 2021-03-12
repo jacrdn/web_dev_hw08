@@ -1,18 +1,202 @@
-<h1><%= @post.title %></h1>
 
-<ul>
+<%= if have_current_user?(@conn) do %>
 
-  <li>
-    <strong>Date:</strong>
-    <%= @post.date %>
-  </li>
 
-  <li>
-    <strong>Body:</strong>
+
+<%= if current_user_is?(@conn, @post.user_id) do %>
+
+<%= if current_user_is?(@conn, @post.user_id) do %>
+    <span><%= link "Edit", to: Routes.post_path(@conn, :edit, @post) %></span>
+  <% end %>
+
+</p>
+
+<h1 class="d-flex justify-content-center"><%= @post.title %></h1>
+
+
+<h4 class="d-flex justify-content-center">Date: <%= @post.date %></h4>
+
+<h4 class="d-flex justify-content-center">Description:</h4>
+
+  <div class="d-flex justify-content-center">
     <%= @post.body %>
-  </li>
+  </div>
 
-</ul>
 
-<span><%= link "Edit", to: Routes.post_path(@conn, :edit, @post) %></span>
-<span><%= link "Back", to: Routes.post_path(@conn, :index) %></span>
+<div role="main" class="container">
+      <div class="row">
+        <div class="col my-1">
+<h2>Add Comment</h2>
+
+<%= if have_current_user?(@conn) do %>
+  <%= render(
+    EventsWeb.CommentView,
+    "form.html",
+    changeset: @new_comment,
+    action: Routes.comment_path(@conn, :create)
+  ) %>
+<% end %>
+
+<h2>Comments</h2>
+
+<%= for comm <- @post.comments do %>
+  <div class="card">
+    <div class="card-body">
+      <p><%= comm.user.name %> commented:</p>
+      <p class="card-text"><%= comm.body %></p>
+      <%= if have_current_user?(@conn) and current_user_is?(@conn, @post.user_id) do %>
+          <span><%= link "Delete", to: Routes.comment_path(@conn, :delete, comm), method: :delete, data: [confirm: "Are you sure?"] %></span>
+      <% end %>
+      <%= if have_current_user?(@conn) and current_user_is?(@conn, comm.user_id) and not current_user_is?(@conn, @post.user_id) do %>
+          <span><%= link "Delete", to: Routes.comment_path(@conn, :delete, comm), method: :delete, data: [confirm: "Are you sure?"] %></span>
+      <% end %>
+    </div>
+  </div>
+<% end %>
+
+</div>
+
+<div class="col my-2">
+<h2>Invitees</h2>
+
+<%= if have_current_user?(@conn) and @current_user.id == @post.user_id do %>
+  <%= render(
+    EventsWeb.InviteeView,
+    "form.html",
+    changeset: @new_invitee,
+    action: Routes.invitee_path(@conn, :create)
+  ) %>
+<% end %>
+
+<h2>Invited</h2>
+
+<%= for invi <- @post.invitees do %>
+  <div class="card">
+    <div class="card-body">
+      <p class="card-text">email: <%= invi.email %></p>
+      <%= if have_current_user?(@conn) and current_user_is?(@conn, @post.user_id) do %>
+          <span><%= link "Delete", to: Routes.invitee_path(@conn, :delete, invi), method: :delete, data: [confirm: "Are you sure?"] %></span>
+      <% end %>
+    </div>
+    </div>
+<% end %>
+
+
+</div>
+
+<div class="col my-3">
+
+<h2>Responses</h2>
+
+<%= for re <- @post.responses do %>
+  <div class="card">
+    <div class="card-body">
+      <p class="card-text"><%= re.user.name %>: <%= re.response %></p>
+    </div>
+  </div>
+<% end %>
+<% end %>
+
+</div>
+
+
+<%= for invit <- @post.invitees do %>
+  <%= if @current_user.email == invit.email do %>
+
+<h1 class="d-flex justify-content-center"><%= @post.title %></h1>
+
+
+<h4 class="d-flex justify-content-center">Date: <%= @post.date %></h4>
+
+<h4 class="d-flex justify-content-center">Description:</h4>
+
+  <div class="d-flex justify-content-center">
+    <%= @post.body %>
+  </div>
+
+<div role="main" class="container">
+      <div class="row">
+        <div class="col my-2">
+<h2>Add Comment</h2>
+
+<%= if have_current_user?(@conn) do %>
+  <%= render(
+    EventsWeb.CommentView,
+    "form.html",
+    changeset: @new_comment,
+    action: Routes.comment_path(@conn, :create)
+  ) %>
+<% end %>
+
+<h2>Comments</h2>
+
+<%= for comm <- @post.comments do %>
+  <div class="card">
+    <div class="card-body">
+      <p><%= comm.user.name %> commented:</p>
+      <p class="card-text"><%= comm.body %></p>
+      <%= if have_current_user?(@conn) and current_user_is?(@conn, @post.user_id) do %>
+          <span><%= link "Delete", to: Routes.comment_path(@conn, :delete, comm), method: :delete, data: [confirm: "Are you sure?"] %></span>
+      <% end %>
+      <%= if have_current_user?(@conn) and current_user_is?(@conn, comm.user_id) and not current_user_is?(@conn, @post.user_id) do %>
+          <span><%= link "Delete", to: Routes.comment_path(@conn, :delete, comm), method: :delete, data: [confirm: "Are you sure?"] %></span>
+      <% end %>
+    </div>
+  </div>
+<% end %>
+
+</div>
+
+<div class="col my-2">
+
+<h2>Invited</h2>
+
+<%= for invi <- @post.invitees do %>
+  <div class="card">
+    <div class="card-body">
+      <p class="card-text">email: <%= invi.email %></p>
+    </div>
+    </div>
+<% end %>
+
+</div>
+
+<div class="col my-2">
+
+
+<h2>Respond</h2>
+
+  <%= if have_current_user?(@conn) and not current_user_is?(@conn, @post.user_id) do %>
+  <%= render(
+    EventsWeb.ResponseView,
+    "form.html",
+    changeset: @new_response,
+    action: Routes.response_path(@conn, :create)
+  ) %>
+  <% end %>
+
+<h2>Responses</h2>
+
+<%= for re <- @post.responses do %>
+  <div class="card">
+    <div class="card-body">
+      <p class="card-text"><%= re.user.name %>: <%= re.response %></p>
+      <span><%= link "Edit", to: Routes.response_path(@conn, :edit, re) %></span>
+    </div>
+  </div>
+<% end %>
+
+</div>
+
+
+<% end %>
+
+
+<% end %>
+
+
+<% else %>
+
+<h1> please login to view post </h1>
+
+<% end %>

@@ -1,6 +1,6 @@
 <h1>Listing Users</h1>
 
-<table>
+<table class="table table-striped">
   <thead>
     <tr>
       <th>Name</th>
@@ -11,6 +11,7 @@
   </thead>
   <tbody>
 <%= for user <- @users do %>
+
     <tr>
       <td><%= user.name %></td>
       <td><%= user.email %></td>
@@ -24,5 +25,3 @@
 <% end %>
   </tbody>
 </table>
-
-<span><%= link "New User", to: Routes.user_path(@conn, :new) %></span>

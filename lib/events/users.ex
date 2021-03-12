@@ -48,6 +48,8 @@ defmodule Events.Users do
     Repo.get_by(User, email: email)
   end
 
+
+
   @doc """
   Creates a user.
 

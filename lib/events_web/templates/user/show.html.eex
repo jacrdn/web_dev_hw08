@@ -1,6 +1,17 @@
-<h1>Show User</h1>
+
 
 <ul>
+<%= if have_current_user?(@conn) do %>
+
+<h1>Show User</h1>
+  <div>
+  <strong>photo:</strong>
+    <%# <% src = Routes.user_path(@conn, :photo, @user) %>
+    <% src = Routes.user_path(@conn, :photo, @user) %>
+      <img class="card-img-top"
+           src="<%= src %>"
+           alt="">
+  </div>
 
   <li>
     <strong>Name:</strong>
@@ -15,4 +26,10 @@
 </ul>
 
 <span><%= link "Edit", to: Routes.user_path(@conn, :edit, @user) %></span>
-<span><%= link "Back", to: Routes.user_path(@conn, :index) %></span>
+ <span><%= link "Delete", to: Routes.user_path(@conn, :delete, @user), method: :delete, data: [confirm: "Are you sure?"] %></span>
+
+ <% else %>
+
+  <h1>User created, time to login!</h1>
+
+ <% end %>
