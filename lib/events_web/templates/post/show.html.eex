@@ -13,6 +13,7 @@
 
 <h1 class="d-flex justify-content-center"><%= @post.title %></h1>
 
+<h4 class="d-flex justify-content-center">Event Link: events.jacrdn.com/posts/<%= @post.id %></h4>
 
 <h4 class="d-flex justify-content-center">Date: <%= @post.date %></h4>
 
