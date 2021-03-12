@@ -25,7 +25,7 @@ the only thing missing is new responses overriding old ones. additionally there 
 
 user goes to the site,
 
-- must create a user to make events
+- must create a user to make events (and upload a profile picture)
 - is prompted after to login (by email)
 
 after a user is logged in they can acess and delete their profile or go back to the home page with the event feed
