@@ -1,22 +1,15 @@
-# Events
+# BLAZENEU - 
+
+## Success, not drug tests
+We want you to be as prepared as possible.
+Know what to expect, before you get to the interview.
+
+
+## The BLAZE NEU team does not encourage or condone the use of recreational drugs, which may violate aspects of the Northeastern University Code of Student Conduct.
+
+## It is our belief that transpareny in employment screening is mutually beneficial for students and employers.
+
+## This website exists to improve that transparency.
 
 ## Includes code from and based on Prof Tuck's in-class PhotoBlog example.
 
-To start your Phoenix server:
-
-  * Install dependencies with `mix deps.get`
-  * Create and migrate your database with `mix ecto.setup`
-  * Install Node.js dependencies with `npm install` inside the `assets` directory
-  * Start Phoenix endpoint with `mix phx.server`
-
-Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
-
-Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
-
-## Learn more
-
-  * Official website: https://www.phoenixframework.org/
-  * Guides: https://hexdocs.pm/phoenix/overview.html
-  * Docs: https://hexdocs.pm/phoenix
-  * Forum: https://elixirforum.com/c/phoenix-forum
-  * Source: https://github.com/phoenixframework/phoenix
